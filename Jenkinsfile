@@ -25,7 +25,7 @@ pipeline {
         stage('Terraform Init') {
                     steps {
                         script{
-                            if (params.PLAN_TERRAFORM){
+                            if (params.INIT_TERRAFORM){
                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-panku']]){
                             dir('infra') {
                             sh 'echo "=================Terraform Init=================="'
@@ -59,7 +59,7 @@ pipeline {
                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-panku']]){
                             dir('infra') {
                                 sh 'echo "=================Terraform Apply=================="'
-                                sh 'terraform apply -auto-approve'
+                                sh 'terraform apply --auto-approve'
                             }
                         }
                     }
