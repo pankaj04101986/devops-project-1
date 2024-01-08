@@ -74,7 +74,7 @@ pipeline {
                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-panku']]){
                             dir('infra') {
                                 sh 'echo "=================Terraform Destroy=================="'
-                                sh 'terraform destroy -auto-approve'
+                                sh 'terraform destroy --auto-approve'
                             }
                         }
                     }
