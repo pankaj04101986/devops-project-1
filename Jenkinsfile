@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     parameters {
+            booleanParam(name: 'INIT_TERRAFORM', defaultValue: false, description: 'Check to init Terraform changes')
             booleanParam(name: 'PLAN_TERRAFORM', defaultValue: false, description: 'Check to plan Terraform changes')
             booleanParam(name: 'APPLY_TERRAFORM', defaultValue: false, description: 'Check to apply Terraform changes')
             booleanParam(name: 'DESTROY_TERRAFORM', defaultValue: false, description: 'Check to apply Terraform changes')
@@ -24,7 +25,7 @@ pipeline {
         stage('Terraform Init') {
                     steps {
                         script{
-                            if (params.PLAN_TERRAFORM)
+                            if (params.PLAN_TERRAFORM){
                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-crendentails-panku']]){
                             dir('infra') {
                             sh 'echo "=================Terraform Init=================="'
@@ -32,6 +33,8 @@ pipeline {
                         }
                     }
                 }
+                        }
+                    }
         }
 
         stage('Terraform Plan') {
